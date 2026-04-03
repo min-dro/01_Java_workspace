@@ -1,0 +1,9 @@
+package com.kh.view;
+
+import java.util.Scanner;
+
+public class MemberView {
+		
+	private Scanner sc = new Scanner(System.in);
+
+}

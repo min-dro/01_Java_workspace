@@ -1,0 +1,5 @@
+package com.kh.chap02_set.part01_hashSet.model.vo;
+
+public class Student { // 클래스 영역 시작
+
+} // 클래스 영역 끝

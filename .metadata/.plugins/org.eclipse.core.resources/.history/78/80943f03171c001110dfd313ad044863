@@ -1,0 +1,188 @@
+package com.kh.chap00_intro.util;
+
+import java.util.Arrays;
+
+// Collection 수업을 위한 예제
+// > 마치 배열처럼 여러 개의 테이터를 타입에 상관 없이 저장할 수 있게끔 구현
+//	 또한 사이즈 제한 없이 저장할 수 있게끜 구현
+// > 즉, 기존의 배열의 단점을 보완하게끔 구현해보자!!
+public class MyList { // 클래스 영역 시작
+
+	// 필드부
+	private Object[] arr;
+	// 자료형에 상관 없이 아무 데이터나 다 담을 수 있는 배열 (다형성 적용)
+	
+	private int size;
+	// > arr 배열에 실제로 담겨있는 데이터의 갯수
+	
+	// 생성자부
+	// 1. 기본생성자
+	// > arr 필드를 10칸짜리로 할당 (new), size 값도 0 으로 셋팅
+	
+	public MyList() {
+		
+		arr = new Object[10]; // [0] ~ [9] (null 로 초기화)
+		size = 0;
+	}
+	
+	// 2. 매개변수생성자
+	// > int length 라는 매개변수를 받아서
+	//	 arr 필드를 length 칸 짜리로 할당 (new), size 값도 0 으로 셋팅
+	
+	public MyList(int length) {
+		
+		arr = new Object[length]; // [0] ~ [length - 1] (null 로 초기화)
+		size = 0;
+	}
+	
+	// 메소드부
+	// 1. add(Object item) : void
+	// > 매개변수로 전달받은 item 을 arr 배열의 마지막 인덱스에 저장 (데이터가 저장된 위치 기준으로 마지막 인덱스)
+	//	 당연히 add 가 한번 일어날 때 마다 size 도 1 씩 증가해야함
+	// > 단, 배열이 이미 가득 다 차있다면 기존 arr 배열을 깊은복사하되, 기존의 2배 사이즈로 배열 복사 후 마지막 인덱스에 저장
+	public void add(Object item) {
+		
+		// 값을 담기 전에 배열이 이미 다 차있는지 위에서 먼저 검사
+		// > 현재 배열의 크기와 배열에 담겨있는 갯수 (size) 가 일치할 경우
+		if(arr.length == size) {
+			
+			// 깊은 복사 2배 크기로
+			/**
+			Object[] copy = new Object[arr.length * 2];
+			System.arraycopy(arr, 0, copy, 0, arr.length);
+			arr = copy.clone();
+			**/
+			arr = Arrays.copyOf(arr, arr.length * 2);
+		}
+		// 갚을 담아주는 코드
+		arr[size] = item;
+		size++;
+		
+	}
+	
+	// 2. add(int index, Object item) : void - 오버로딩
+	// > 매개변수로 전달받은 item 을 arr 배열의 index 번째 칸에 저장
+	//   그냥 넣으면 안되고, 기존의 데이터들을 뒤로 한칸씩 밀어주고 공간을 확보 한 다음에 넣어줘야함!! (for문)
+	//	 당연히 add 가 한번 일어날 때 마다 size 도 1 씩 증가해야함
+	// > 단, 배열이 이미 가득 다 차있다면 기존 arr 배열을 깊은복사하되,
+	//	 기존의 2배 사이즈로 배열 복사 후 기존의 데이터를 뒤로 한칸씩 밀어주고 해당 index 에 데이터 저장
+	
+	public void add(int index, Object item) {
+		
+		// 배열이 가득 차있는지 검사 후 가득 차있다면 2배 크기로 깊은복사
+		if(arr.length == size) {
+			/**
+			Object[] copy = new Object[arr.length * 2];
+			System.arraycopy(arr, 0, copy, 0, arr.length);
+			arr = copy.clone();
+			**/
+			
+			arr = Arrays.copyOf(arr, arr.length * 2);
+		}
+		
+		// index 번째 공간 확보 - 뒤로 데이터들을 한칸씩 밀어주면서
+		// > index ~ 마지막 값부터 뒤로 한 칸씩 밀어줄거임!!
+		//	 가장 마지막 값부터 뒤로 한칸씩 밀어줘야한다!! (가장 앞의 값부터 뒤로 밀어주면 줄줄이 덮어씌워짐)
+		for(int i = size + 1; i > index - 1; i--) {
+			
+					arr[i] = arr[i - 1];
+		}
+		
+		// 값 담고, size 1 증가
+		arr[index] = item;
+		size++;
+	}
+	
+	// 3. set(int index, Object item) : void
+	// > 전달받은 index 번째 칸의 데이터를 item 으로 변경
+	//	 단, index 는 현재 값이 있는 인덱스로 제시해야한다!!
+	public void set(int index, Object item) {
+		
+		// 값을 변경하기 전에 index 가 정확하게 닶이 담겨있는 index 인지를 먼저 검사
+		if((0 <= index) && (index < size)) {
+			
+			arr[index] = item;
+			// > 대입 (덮어씌워짐) 되면서 값이 수정되는 효과
+		}
+	}
+	
+	// 4. get(int index) : Object
+	// > arr 배열로부터 전달받은 index 번째 데이터를 리턴
+	//	 단, index 는 현재 값이 있는 인덱스로 제시해야한다!!
+	public Object get(int index) {
+		
+		// 값이 정확히 들어있는 index 인지를 검사
+		if((0 <= index) && (index < size)) {
+			return arr[index];
+		} else {
+			return null;	
+		}
+	}
+	
+	// 5. remove(int index) : void
+	// > arr 배열로부터 전달받은 index 번째 데이터를 삭제
+	//	 당연히 size 값 또한 1 감소시키기
+	// > 단, 해당 데이터 삭제 후 뒤의 데이터를 앞으로 한칸씩 땡겨오는 작업까지 해줘야 함!! (for문)
+	public void remove(int index) {
+		
+		// 앞으로 데이터들을 한칸씩 땡겨오기
+		for(int i = index; i < size - 1; i++) {
+			arr[i] = arr[i+1];
+			
+		}
+		
+		// 마지막 데이터는 삭제해주기 & 데이터 갯수도 1 감소 시키기
+		arr[size] = null;
+		size--;
+	}
+	
+	// 6. size() : int
+	// > arr 배열에 담겨있는 실제 데이터의 갯수를 새서 반환 (size 맴버변수 활용)
+	public int size() {
+		
+		return size;
+	}
+	
+	// 7. isEmpty() : boolean
+	// > arr 배열에 담겨있는 데이터가 하나도 없다면 true / 하나라도 있다면 false 반환 (size 맴버변수 활용)
+	public boolean isEmpty() {
+		/*
+		if(size == 0) {
+			
+			return true;
+		
+		} else {
+		
+			return false;
+		}
+		*/
+		
+		return (size == 0) ? true : false; // 삼항연산자 활용 가능 
+	}
+	
+	// 8. toString() : String - 오버라이딩
+	// > arr 배열의 내용물을 "[값, 값, 값, ...]" 형식으로 문자열 리턴
+	// > 단, 실제로 담겨있는 데이터 까지만 문자열 리턴
+	
+	@Override
+	public String toString() {
+		
+		String str = "[";
+		
+		// 반복문으로 데이터 이어붙이기
+		for(int i = 0; i < size; i++) {
+			if(i == size - 1) {
+				
+				str += arr[i];
+				
+			} else {
+				
+				str+= arr[i] + ", ";
+			}
+		}
+		str += "]";
+		
+		return str;
+	}
+	
+} // 클래스 영역 끝

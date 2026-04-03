@@ -1,0 +1,23 @@
+package com.kh.controller;
+
+import java.util.ArrayList;
+
+import com.kh.model.vo.Car;
+
+public class ParkingTowerController {
+
+	private ArrayList<Car> carList = new ArrayList<>();
+
+	public int insertCar(int carNum, int carType, String owner) {
+		int before = carList.size();
+		int parkingNum = 1;
+		if(parkingNum != 1) {
+			parkingNum = before + 1;
+		}
+		carList.add(new Car(parkingNum, carNum, carType, owner));
+		return 0;
+	}
+	
+	
+	
+}

@@ -1,0 +1,11 @@
+package com.kh.chap01_list.part02_mvc.controller;
+
+public class MusicController { // 클래스 영역 시작
+
+	public void insertMusic() {
+		// TODO Auto-generated method stub
+		
+	} 
+	
+	
+} // 클래스 영역 끝

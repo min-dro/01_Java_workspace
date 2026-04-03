@@ -1,0 +1,242 @@
+package com.kh.view;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import com.kh.controller.KeyboardController;
+import com.kh.model.vo.Keyboard;
+
+public class KeyboardView { // 클래스 영역 시작
+		
+	private Scanner sc = new Scanner(System.in);
+	private KeyboardController kc = new KeyboardController();
+	
+	
+	public void mainMenu() { // 메소드 영역 시작
+		while(true) {
+			System.out.println("===== 키보드 관리 프로그램 =====");
+			System.out.println("1. 키보드 정보 추가");
+			System.out.println("2. 키보드 정보 전체조회");
+			System.out.println("3. 키보드 모델명 키워드 검색");
+			System.out.println("4. 키보드 정보 수정");
+			System.out.println("5. 키보드 정보 삭제");
+			System.out.println("0. 프로그램 종료");
+			
+			System.out.print("입력 : ");
+			int num = sc.nextInt();
+			sc.nextLine();
+			
+			switch(num) {
+			case 1 :
+				insertKeyboard();
+				break;
+			case 2 :
+				selectKeyboardList();
+				break;
+			case 3 :
+				selectKeyboardByModelName();
+				break;
+			case 4 :
+				updateKeyboard();
+				break;
+			case 5 :
+				deleteKeyboard();
+				break;
+			case 0 :
+				System.out.println("프로그램이 종료 되었습니다.");
+				return;
+			default : 
+				System.out.println("잘못 입력하였습니다. 다시 입력해주세요.");
+			}
+			
+		}
+		
+	} // 메소드 영역 끝
+
+
+	public void insertKeyboard() { // 메소드 영역 시작
+		System.out.print("제조사 입력 : ");
+		String brand = sc.nextLine();
+
+		System.out.print("모델명 입력 : ");
+		String modelName = sc.nextLine();
+		
+		System.out.print("키 개수 입력 : ");
+		int keyCount = sc.nextInt();
+		sc.nextLine();
+
+		System.out.print("스위치 종류 (적축, 갈축, 자석축, 멤브레인 등) 입력 : ");
+		String switchType = sc.nextLine();
+		
+		System.out.print("연결 방식 (유선, 무선, 블루투스) 입력 : ");
+		String connection = sc.nextLine();
+		
+		System.out.print("가격 입력 : ");
+		int price = sc.nextInt();
+		sc.nextLine();
+		
+		char rgb;
+		while(true) {
+			System.out.print("RGB 여부(y/n) 입력 : ");
+			String yn = sc.nextLine();
+			rgb = yn.toLowerCase().charAt(0);
+			
+			if(rgb == 'y' || rgb == 'n') {
+				break;
+			} else {
+				System.out.println("잘못 입력했습니다. 다시 입력하세요.");
+			}
+		}
+		
+		System.out.print("상세 내용 입력(생략 하시려면 Enter키 입력) :");
+		String detail = sc.nextLine();
+		
+		int result = kc.insertKeyboard(brand, modelName, keyCount, switchType, connection, price, rgb,
+				detail);
+		if(result > 0) {
+			System.out.println("키보드가 추가 되었습니다.");
+		} else {
+			System.out.println("키보드가 추가되지 않았습니다.");
+		}
+	} // 메소드 영역 끝
+
+
+	public void selectKeyboardList() { // 메소드 영역 시작
+
+		ArrayList<Keyboard> list = kc.selectKeyboardList();
+		if(list.isEmpty()) {
+			System.out.println("키보드정보가 존재하지 않습니다.");
+		} else {
+			for(int i = 0; i < list.size(); i++) {
+				System.out.println((i + 1) + ". " + list.get(i));
+			}
+			System.out.println("키보드 갯수 : " + list.size());
+		}
+	} // 메소드 영역 끝
+
+	public void selectKeyboardByModelName() { // 메소드 영역 시작
+		System.out.print("키워드 입력 : ");
+		String keyword = sc.nextLine();
+		
+		ArrayList<Keyboard> list = kc.searchKeyboardByModelName(keyword);
+		if (list.isEmpty()) {
+			System.out.println("키보드정보가 존재하지 않습니다");
+		} else {
+			System.out.println(list);
+			System.out.println("키보드 갯수 : " + list.size());
+		}
+	} // 메소드 영역 끝
+
+
+	public void updateKeyboard() { // 메소드 영역 시작
+		System.out.print("모델명 입력 : ");
+		String modelName = sc.nextLine();
+		
+		String upBrand = null, upModelName = null, upSwitchType = null, upConnection = null
+				, upDetail = null;
+		int upKeyCount = 0, upPrice = 0;
+		char upRgb = 0;
+		while(true) {
+				System.out.println("===== 변경 목록 =====");
+				System.out.println("1. 제조사");
+				System.out.println("2. 모델명");
+				System.out.println("3. 키 개수");
+				System.out.println("4. 스위치 종류");
+				System.out.println("5. 연결 방식");
+				System.out.println("6. 가격");
+				System.out.println("7. RGB 여부");
+				System.out.println("8. 상세 내용");
+				System.out.println("0. 뒤로 가기");
+				System.out.print("입력 : ");
+				int num = sc.nextInt();
+				sc.nextLine();
+				
+				switch(num) {
+				case 1 :
+					System.out.print("변경할 제조사 입력 : ");
+					upBrand = sc.nextLine();
+					break;
+				case 2 :
+					System.out.print("변경할 모델명 입력 : ");
+					upModelName = sc.nextLine();
+					break;
+				case 3 :
+					System.out.print("변경할 키 개수 입력 : ");
+					upKeyCount = sc.nextInt();
+					sc.nextLine();
+					break;
+				case 4 :
+					System.out.print("변경할 스위치 종류 (적축, 갈축, 자석축, 멤브레인 등) 입력 : ");
+					upSwitchType = sc.nextLine();
+					break;
+				case 5 :
+					System.out.print("변경할 연결 방식 (유선, 무선, 블루투스) 입력 : ");
+					upConnection = sc.nextLine();
+					break;
+				case 6 :
+					System.out.print("변경할 가격 입력 : ");
+					upPrice = sc.nextInt();
+					sc.nextLine();
+					break;
+				case 7 :
+					while(true) {
+						System.out.print("변경할 RGB 여부(y/n) 입력 : ");
+						String yn = sc.nextLine();
+						upRgb = yn.toLowerCase().charAt(0);
+						
+						if(upRgb == 'y' || upRgb == 'n') {
+							break;
+						} else {
+							System.out.println("잘못 입력했습니다. 다시 입력하세요.");
+						}
+					}
+					break;
+				case 8 :
+					System.out.print("변경할 상세 내용 입력(생략 하시려면 Enter키 입력) : ");
+					upDetail = sc.nextLine();
+					break;
+				case 0 :
+					return;
+				default:
+					System.out.println("잘못 입력했습니다. 다시 입력해주세요.");
+				}
+				if(1 <= num && num <= 8) {
+					break;
+				}
+		}
+		int result = kc.updateKeyboard(modelName, upBrand, upModelName, upKeyCount, upSwitchType
+				, upConnection, upPrice, upRgb, upDetail);
+		
+		
+		if(result > 0) {
+			System.out.println("키보드 정보가 변경 되었습니다.");
+		} else {
+			System.out.println("키보드 정보가 존재하지 않습니다");
+		}
+	} // 메소드 영역 끝
+
+
+	public void deleteKeyboard() { // 메소드 영역 시작
+		System.out.print("모델명 입력 : ");
+		String modelName = sc.nextLine();
+		while(true) {
+			System.out.print("삭제 후 복구할 수 없습니다. 정말 삭제하시겠습니까? (y/n) : ");
+			String yn = sc.nextLine();
+			yn.toLowerCase();
+			if(yn.charAt(0) == 'y') {
+				int result = kc.deleteKeyboard(modelName);
+				if(result > 0) {
+					System.out.println("삭제가 완료되었습니다.");
+				} else {
+					System.out.println("삭제가 실패되었습니다.");
+				}
+				break;
+			} else if(yn.charAt(0) == 'n') {
+				System.out.println("삭제를 취소하겠습니다.");
+				break;
+			} else {
+				System.out.println("잘못 입력했습니다.");
+			}
+		}
+	} // 메소드 영역 끝
+
+} // 클래스 영역 끝

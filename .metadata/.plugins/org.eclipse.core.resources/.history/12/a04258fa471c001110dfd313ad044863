@@ -1,0 +1,36 @@
+package com.kh.chap03_map.part01_hashMap.run;
+
+import java.util.HashMap;
+
+// HashMap 사용법
+public class MapRun { // 클래스 영역 시작
+
+	public static void main(String[] args) { // 메소드 영역 시작
+		// 제네릭 설정 전
+		// HashMap 객체 먼저 생성
+		HashMap hm1 = new HashMap();
+		
+		// 명심할 사항 : 클래스간의 계층구조를 보면 List 나 Set 계열은 Collection 을 구현한 클래스
+		//	 		  Map 계열은 Collection 계열이 아님!!
+		
+		// 차이점 : List 나 Set 계열은 value 만 저장 가능, Map 계열은 key + value 로 저장해야함
+		
+		// K == Object
+		// V == Object
+		// > 제네릭 설정을 아직 안했음!!
+		
+		// 1. put(K key, V value
+		// > Map 공간에 key + value 세트로 데이터를 추가하는 메소드
+		hm1.put("123", "첫번째 밸류");
+		hm1.put(9, 1.234);
+		hm1.put('a', "첫번째 밸류");
+		hm1.put(123, "두번째 밸류");
+		
+		System.out.println(hm1 /* .toString() */);
+		// > {a=첫번째 밸류, 123=두번째 밸류, 9=1.234)
+		// > Collection 자식 계열들은 [] 안에 출력, Map 계열은 {} 안에 출력
+		// > 
+
+	} // 메소드 영역 끝
+
+} // 클래스 영역 끝

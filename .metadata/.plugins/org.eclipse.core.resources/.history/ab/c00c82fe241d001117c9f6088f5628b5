@@ -1,0 +1,215 @@
+package com.kh.view;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.kh.controller.MemberController2;
+import com.kh.model.vo.Member;
+
+public class MemberView2 { // 클래스 영역 시작
+		
+	private Scanner sc = new Scanner(System.in);
+	private MemberController2 mc2 = new MemberController2();
+	
+	
+	public void mainMenu() { // 메소드 영역 시작
+		int count = 0;
+		while(true) {
+			if(count == 5) {
+				System.out.println("비밀번호를 5회이상 틀려서 프로그램을 종료합니다.");
+				return;
+			} else if (0 < count && count < 5 ) {
+				System.out.println("로그린 시도 횟수는 " + (5 - count) + "번 남았습니다");
+			}
+			System.out.print("아이디 입력 : ");
+			String userId = sc.nextLine();
+			
+			System.out.print("비밀번호 입력 : ");
+			String userPw = sc.nextLine();
+			
+			if(userId.equals("admin")) {
+				if(userPw.equals("P@s$W0rd!")) {
+					System.out.println("환영합니다.");
+					break;
+				} else {
+					System.out.print("비밀번호를 틀렸습니다. ");
+					count++;
+				}
+			} else {
+				count++;
+				System.out.print("존재하지 않는 아이디입니다. ");
+			}
+		}
+		
+		while(true) {
+			System.out.println("1. 회원 추가");
+			System.out.println("2. 회원 전체조회");
+			System.out.println("3. 회원 아이디 검색");
+			System.out.println("4. 회원 이름 키워드 검색");
+			System.out.println("5. 회원 비밀번호 초기화");
+			System.out.println("6. 회원 삭제");
+			System.out.println("0. 프로그램 로그아웃");
+			
+			System.out.print("입력 : ");
+			int num = sc.nextInt();
+			sc.nextLine();
+			
+			switch(num) {
+			case 1 :
+				insertMember();
+				break;
+			case 2 :
+				selectMemberList();
+				break;
+			case 3 :
+				selectMemberById();
+				break;
+			case 4 :
+				selectMemberByName();
+				break;
+			case 5 :
+				initMemberPwd();
+				break;
+			case 6 :
+				deleteMember();
+				break;
+			case 0 :
+				System.out.println("로그아웃 되었습니다.");
+				return;
+			default : 
+				System.out.println("잘못 입력하였습니다");
+			}
+			
+		}
+		
+	} // 메소드 영역 끝
+
+
+	public void insertMember() { // 메소드 영역 시작
+		String userId = "";
+		while(true) {
+			System.out.print("아이디 입력 : ");
+			userId = sc.nextLine();
+			
+			int result = mc2.idCheck(userId);
+			if(result > 0) {
+				System.out.println("이미 사용중인 아이디입니다.");
+			} else {
+				System.out.println("사용 가능한 아이디입니다.");
+				break;
+			}
+		}
+		System.out.print("비밀번호 입력 : ");
+		String userPwd = sc.nextLine();
+		
+		System.out.print("이름 입력 : ");
+		String userName = sc.nextLine();
+
+		System.out.print("나이 입력 : ");
+		int age = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.print("성별 입력(F/M) : ");
+		char gender = sc.next().charAt(0);
+		sc.nextLine();
+		
+		System.out.print("이메일 입력 : ");
+		String email = sc.nextLine();
+		
+		System.out.print("휴대폰번호 입력 : ");
+		String phone = sc.nextLine();
+		
+		int result = mc2.insertMember(userId, userPwd, userName, age, gender, email, phone);
+		if(result > 0) {
+			System.out.println("회원이 추가 되었습니다.");
+		} else {
+			System.out.println("회원이 추가되지 않았습니다.");
+		}
+	} // 메소드 영역 끝
+
+
+	public void selectMemberList() { // 메소드 영역 시작
+
+		Member[] list = mc2.selectMemberList();
+		if(list == null) {
+			System.out.println("회원정보가 존재하지 않습니다.");
+		} else {
+			for(Member m : list) {
+				if(m == null) {
+					continue;
+				}
+				System.out.println(m);
+			}
+			System.out.println("회원 명 수 : " + list.length);
+		}
+	} // 메소드 영역 끝
+
+
+	public void selectMemberById() { // 메소드 영역 시작
+		System.out.print("아이디 입력 : ");
+		String userId = sc.nextLine();
+		Member m = mc2.searchMemberByld(userId);
+		if(m == null) {
+			System.out.println("회원정보가 존재하지 않습니다.");
+		} else {
+			System.out.println(m);
+		}
+	} // 메소드 영역 끝
+
+
+	public void selectMemberByName() { // 메소드 영역 시작
+		System.out.print("키워드 입력 : ");
+		String keyword = sc.nextLine();
+		
+		Member[] list = mc2.searchMemberByName(keyword);
+		if (list == null) {
+			System.out.println("회원정보가 존재하지 않습니다");
+		} else {
+			for(Member m : list) {
+				if(m == null) {
+					continue;
+				}
+				System.out.println(m);
+			}
+			System.out.println("회원 명 수 : " + list.length);
+		}
+	} // 메소드 영역 끝
+
+
+	public void initMemberPwd() { // 메소드 영역 시작
+		System.out.print("아이디 입력 : ");
+		String userId = sc.nextLine();
+		int result = mc2.initMemberPwd(userId);
+		if(result > 0) {
+			System.out.println("비밀번호가 초기화 되었습니다.");
+		} else {
+			System.out.println("회원정보가 존재하지 않습니다");
+		}
+	} // 메소드 영역 끝
+
+
+	public void deleteMember() { // 메소드 영역 시작
+		System.out.print("아이디 입력 : ");
+		String userId = sc.nextLine();
+		while(true) {
+			System.out.print("삭제 후 복구할 수 없습니다. 정말 삭제하시겠습니까? (y/n) : ");
+			String yn = sc.nextLine();
+			yn.toLowerCase();
+			if(yn.charAt(0) == 'y') {
+				int result = mc2.deleteMember(userId);
+				if(result > 0) {
+					System.out.println("삭제가 완료되었습니다.");
+				} else {
+					System.out.println("삭제가 실패되었습니다.");
+				}
+				break;
+			} else if(yn.charAt(0) == 'n') {
+				System.out.println("삭제를 취소하겠습니다.");
+				break;
+			} else {
+				System.out.println("잘못 입력했습니다.");
+			}
+		}
+	} // 메소드 영역 끝
+
+} // 클래스 영역 끝

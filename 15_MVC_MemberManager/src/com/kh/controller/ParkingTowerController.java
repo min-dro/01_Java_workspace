@@ -1,0 +1,48 @@
+package com.kh.controller;
+
+import java.util.ArrayList;
+
+import com.kh.model.vo.Car;
+
+public class ParkingTowerController {
+
+	private ArrayList<Car> carList = new ArrayList<>();
+
+	public int insertCar(int carNum, int carType, String owner) {
+		int before = carList.size();
+		int parkingNum = 1;
+		if(parkingNum != 1) {
+			parkingNum += 1;
+		}
+		carList.add(new Car(parkingNum, carNum, carType, owner));
+		int after = carList.size();
+		return after - before;
+	}
+
+	public int deleteCar(int carNum) {
+		for(int i = 0; i < carList.size(); i++) {
+			if(carList.get(i).getCarNum() == carNum) {
+				carList.remove(i);
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	public ArrayList<Car> searchCar(String owner) {
+		ArrayList<Car> list = new ArrayList<>();
+		for(int i = 0; i < carList.size(); i++) {
+			if(carList.get(i).getOwner().equals(owner)) {
+				list.add(carList.get(i));
+			}
+		}
+		return list;
+	}
+
+	public ArrayList<Car> selectList() {
+		return carList;
+	}
+	
+	
+	
+}

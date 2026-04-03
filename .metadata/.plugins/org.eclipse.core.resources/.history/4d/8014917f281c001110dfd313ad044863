@@ -1,0 +1,80 @@
+package com.kh.chap01_list.part02_mvc.controller;
+
+import java.util.ArrayList;
+
+import com.kh.chap01_list.part02_mvc.model.vo.Music;
+
+// Controller : 사용자의 "요청" 을 받아서 해당 기능을 처리해주는 부분
+// > 주로 View 에서 입력받아서 넘겨주는 것들을 가지고 처리함!!
+public class MusicController { // 클래스 영역 시작
+
+	// 필드부 - 전역변수로 음악 정보를 담을 수 있는 "저장소" 만들기
+	private ArrayList<Music> list = new ArrayList<>();
+	{
+		// 초기화 블록
+		// 원할한 테스트를 위해 list 에 몇 개의 Music 객체를 미리 담아두기!! 
+		
+		list.add(new Music("BANG BANG", "아이브"));
+		list.add(new Music("404 (New Era)", "키키"));
+		list.add(new Music("Good Goodbye", "화사"));
+		list.add(new Music("타임캡슐", "다비치"));
+	}
+	// 1. 새로운 곡을 추가하는 기능을 담당하는 메소드
+	public void insertMusic(String title, String artist) { // 메소드 영역 시작
+		
+		list.add(new Music(title, artist));
+	} // 메소드 영역 끝
+
+	public ArrayList<Music> selectMusicList() { // 메소드 영역 시작
+		
+		// 전제 곡을 조회 == 저장소에 있는 모든 Music 정보를 출력
+		// Controller 에서 출력문 사용 금지!! (역할 분암이 애매모호해짐
+		/*
+		for(int i = 0; i < list.size(); i++) {
+			
+			System.out.println(list.get(i));
+		}
+		*/
+		return list;
+		
+	} // 메소드 영역 끝
+
+	public ArrayList<Music> searchMuisc(String keyword) { // 메소드 영역 시작
+		
+		// 검색 결과르르 담아둘 ArrayList 생성
+		ArrayList<Music> searchedList = new ArrayList<>();
+		
+		// 검색 기능 수행
+		// > 통상적으로 "검색" 기능이라고 한다면
+		//	 "일치" 가 아니라 "포함" 기준으로 처리한다!!
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			if(list.get(i).getTitle().contains(keyword)) {
+				
+				// System.out.println(list.get(i));
+				searchedList.add(list.get(i));
+			}
+		}
+		return searchedList; 
+	} // 메소드 영역 끝
+
+	public void deleteMusic(String title) { // 메소드 영역 시작
+		
+		// 삭제 처리 시에는 "일치" 하는 곡 기준으로 삭제할것임!!
+		for(int i = 0; i < list.size(); i++) {
+			
+			if(list.get(i).getTitle().equals(title)){
+				list.remove(i);
+				// > i 번째 데이터를 삭제하고
+				i--;
+				// > 다음 증감식에 의해 1 증가될 것에 대비하여 미리 1 빼기!!
+				//	 (안하면 삭제된 데이터 기준 바로 다음데이터는 반복이 그냥 넘어가게 됨)
+				
+				
+			}
+		}
+		
+	} // 메소드 영역 끝
+	
+} // 클래스 영역 끝

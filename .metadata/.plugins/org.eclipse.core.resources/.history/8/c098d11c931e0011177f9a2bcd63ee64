@@ -1,0 +1,138 @@
+package com.kh.chap01_list.part02_mvc.controller;
+
+import java.util.ArrayList;
+
+import com.kh.chap01_list.part02_mvc.model.vo.Music;
+
+// Controller : 사용자의 "요청" 을 받아서 해당 기능을 처리해주는 부분
+// > 주로 View 에서 입력받아서 넘겨주는 것들을 가지고 처리함!!
+public class MusicController { // 클래스 영역 시작
+
+	// 필드부 - 전역변수로 음악 정보를 담을 수 있는 "저장소" 만들기
+	private ArrayList<Music> list = new ArrayList<>();
+	{
+		// 초기화 블록
+		// 원할한 테스트를 위해 list 에 몇 개의 Music 객체를 미리 담아두기!! 
+		
+		list.add(new Music("BANG BANG", "아이브"));
+		list.add(new Music("404 (New Era)", "키키"));
+		list.add(new Music("Good Goodbye", "화사"));
+		list.add(new Music("타임캡슐", "다비치"));
+	}
+
+	// 1. 새로운 곡을 추가하는 기능을 담당하는 메소드
+	public int insertMusic(String title, String artist) { // 메소드 영역 시작
+		
+		// 음악 추가 전 갯수
+		int before = list.size();
+		
+		list.add(new Music(title, artist));
+		
+		// 음악 추가 후 갯수
+		int after = list.size();
+		
+		return after - before;
+		// > 곡 추가가 제대로 되있다면 1 이 리턴
+		
+	} // 메소드 영역 끝
+
+	// 2. 전체 곡을 조회하는 기능을 담당하는 메소드
+	public ArrayList<Music> selectMusicList() { // 메소드 영역 시작
+		
+		// 전제 곡을 조회 == 저장소에 있는 모든 Music 정보를 출력
+		// Controller 에서 출력문 사용 금지!! (역할 분암이 애매모호해짐
+		/*
+		for(int i = 0; i < list.size(); i++) {
+			
+			System.out.println(list.get(i));
+		}
+		*/
+		
+		return list;
+		
+	} // 메소드 영역 끝
+
+	// 3. 특정 곡을 검색할 수 있는 기능 담당 메소드
+	public ArrayList<Music> searchMuisc(String keyword) { // 메소드 영역 시작
+		
+		// 검색 결과르르 담아둘 ArrayList 생성
+		ArrayList<Music> searchedList = new ArrayList<>();
+		
+		// 검색 기능 수행
+		// > 통상적으로 "검색" 기능이라고 한다면
+		//	 "일치" 가 아니라 "포함" 기준으로 처리한다!!
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			if(list.get(i).getTitle().contains(keyword)) {
+				
+				// System.out.println(list.get(i));
+				searchedList.add(list.get(i));
+			}
+		}
+		
+		// 이 시점 기준으로 searchedLisr 에는 검색 결과들이 잘 담겨있음!!
+		return searchedList; 
+	} // 메소드 영역 끝
+
+	// 4. 특정 곡을 삭제하는 기능 담당 메소드
+	public int deleteMusic(String title) { // 메소드 영역 시작
+		
+		// 삭제가 진행된 회수를 담을 변수
+		int result = 0;
+		
+		// 삭제 처리 시에는 "일치" 하는 곡 기준으로 삭제할것임!!
+		for(int i = 0; i < list.size(); i++) {
+			
+			if(list.get(i).getTitle().equals(title)){
+				
+				list.remove(i);
+				// > i 번째 데이터를 삭제하고
+				i--;
+				// > 다음 증감식에 의해 1 증가될 것에 대비하여 미리 1 빼기!!
+				//	 (안하면 삭제된 데이터 기준 바로 다음데이터는 반복이 그냥 넘어가게 됨)
+				
+				result++;
+				// > 일치하는 곡을 찾아서 삭제가 일어날 때 마다 1씩 증가!!
+				//	 이미 일치하는 제목을 찾아서 삭제했다면 다음 반복 회차들부턴 안돌아도됨!!
+				
+				break;
+				// > 노래 제목들이 중복되지 않다라는 가정하에
+				//	 이미 일피하는 제목을 찾아서 삭제했다면 다음 반복 회차들부턴 안돌아도 됨!!
+			}
+		}
+		
+		// 이 시점 기준으로 result 가 0이라면 삭
+		return result; 
+	} // 메소드 영역 끝
+
+	// 5. 특정 곡을 수정하는 기능 담당 메소드
+	public int updateMusic(String title, String upTitle, String upArtist) {
+		
+		// 수정 된 곡의 갯수를 셀 변수를 먼저 셋팅
+		int result = 0;
+		
+		// 곡 제목이 정확하게 "일치" 할 경우에만 수정시키기!!
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			if(list.get(i).getTitle().equals(title)) {
+				
+				// 방법1. 새로운 Music 객체를 생성 후 set 메소드로 갈아 엎기!!
+				// list.set(i, new Music(upTitle, upArtist));
+				
+				// 방법2. 에초에 i 번째 방에 들어있던 원래 Music 객체의 필드값만 살짝 바꿔주기!!
+				list.get(i).setTitle(upTitle);
+				list.get(i).setArtist(upArtist);
+				
+				result++;
+				
+				break;
+			}
+		}
+		
+		// 이 시점 기준으로 수정된 곡이 하나도 없다면
+		return result;
+	}
+	
+} // 클래스 영역 끝

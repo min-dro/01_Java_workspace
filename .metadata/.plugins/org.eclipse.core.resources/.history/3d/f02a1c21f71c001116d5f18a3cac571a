@@ -1,0 +1,75 @@
+package com.kh.view;
+
+import java.util.Scanner;
+
+import com.kh.controller.ParkingTowerController;
+
+public class ParkingTowerView {
+
+	private Scanner sc = new Scanner(System.in);
+	private ParkingTowerController ptc = new ParkingTowerController();
+	
+	public void mainMenu() {
+		while(true) {
+			System.out.println("1. 차량 주차");
+			System.out.println("2. 차량 출차");
+			System.out.println("3. 주차된 차량 검색");
+			System.out.println("4. 전체 출력");
+			System.out.println("0. 프로그램 종료하기");
+			
+			System.out.print("입력 : ");
+			int num = sc.nextInt();
+			sc.nextLine();
+			
+			switch(num) {
+			case 1 :
+				insertCar();
+				break;
+			case 2 :
+				deleteCar();
+				break;
+			case 3 :
+				searchCar();
+				break;
+			case 4 :
+				selectList();
+				break;
+			case 0 :
+				System.out.println("프로그램을 종료합니다.");
+				return;
+			default :
+				System.out.println("잘못 입력하셨습니다.");
+			}
+		}
+	}
+
+	public void insertCar() {
+		System.out.print("차량 번호 : ");
+		int carNum = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.print("차량 종류(1. 경차 / 2. 세단 / 3. SUV / 4. 트럭) : ");
+		int carType = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.println("차량 주인 : ");
+		String owner = sc.nextLine();
+		
+	}
+
+	public void deleteCar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void searchCar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void selectList() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

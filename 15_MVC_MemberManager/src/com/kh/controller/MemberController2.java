@@ -1,0 +1,142 @@
+package com.kh.controller;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
+
+import com.kh.model.vo.Member;
+
+public class MemberController2 { // 클래스 영역 시작
+	
+	private Member[] memberList = new Member[0];
+	public int size = 0;
+	public int idCheck(String userId) { // 메소드 영역 시작
+		loadFile();
+		for(int i = 0; i < size; i++) {
+			if(userId.equals(memberList[i].getUserId())) {
+				return 1;
+			}
+		}
+		
+		return 0;
+	} // 메소드 영역 끝
+
+	public int insertMember(String userId, String userPwd, String userName, int age, char gender, String email,
+			String phone) { // 메소드 영역 시작
+		loadFile();
+		int before = 0;
+		int userNo = 0;
+		if(size == 0) {
+			userNo = 1;
+		} else {
+			userNo = memberList[size - 1].getUserNo() + 1;
+		}
+		
+		if(memberList.length == size) {
+			memberList = Arrays.copyOf(memberList, memberList.length + 1);
+		}
+		memberList[size++] = new Member(userNo, userId, userPwd, userName, age, gender, email, phone);
+
+		int after = 1;
+		saveFile();
+		
+		return after - before;
+		
+	} // 메소드 영역 끝
+
+	public Member[] selectMemberList() { // 메소드 영역 시작
+		
+		loadFile();
+		
+		return memberList;
+	} // 메소드 영역 끝
+
+	public Member searchMemberByld(String userId) { // 메소드 영역 시작
+		loadFile();
+		for(int i = 0; i < size; i++) {
+			if(userId.equals(memberList[i].getUserId())) {
+				return memberList[i];
+			}
+		}
+		return null;
+	} // 메소드 영역 끝
+
+	public Member[] searchMemberByName(String keyword) { // 메소드 영역 시작
+		loadFile();
+		Member[] list = null;
+		int count = 0;
+		for(int i = 0; i < size; i++) {
+			if(memberList[i].getUserName().contains(keyword)) {
+				count++;
+				
+			}
+		}
+		list = new Member[count];
+		count = 0;
+		for(int i = 0; i < size; i++) {
+			if(memberList[i].getUserName().contains(keyword)) {
+				list[count++] = memberList[i];
+			}
+
+		}
+		return list;
+	} // 메소드 영역 끝
+
+	public int initMemberPwd(String userId) { // 메소드 영역 시작
+		loadFile();
+		for(int i = 0; i < size; i++) {
+			if(userId.equals(memberList[i].getUserId())) {
+				memberList[i].setUserPwd("passwordKH@123");
+				saveFile();
+				return 1;
+			}
+		}
+		return 0;
+	} // 메소드 영역 끝
+
+	public int deleteMember(String userId) { // 메소드 영역 시작
+		loadFile();
+		for(int i = 0; i < size; i++) {
+			if(userId.equals(memberList[i].getUserId())) {
+				for(int j = memberList[i].getUserNo(); j < size; j++) {
+					memberList[i] = memberList[i+1];
+					
+				}
+				memberList[size-1] = null;
+				size--;
+				memberList = Arrays.copyOf(memberList, memberList.length - 1);
+				saveFile();
+				return 1;
+			}
+		}
+		return 0;
+	} // 메소드 영역 끝
+	
+	public void saveFile() {
+
+	    try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("member.dat"))) {
+
+	        oos.writeObject(memberList);
+	        oos.writeInt(size);
+
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	public void loadFile() {
+
+	    try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("member.dat"))) {
+
+	        memberList = (Member[])ois.readObject();
+	        size = ois.readInt();
+
+	    } catch(Exception e) {
+	        // 파일 없을 때는 무시
+	    }
+	}
+	
+} // 클래스 영역 끝

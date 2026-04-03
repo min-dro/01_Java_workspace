@@ -1,0 +1,17 @@
+package com.kh.chap03_map.part02_properties.run;
+
+import java.util.Properties;
+
+public class PropertiesRun2 { // 클래스 영역 시작
+
+	public static void main(String[] args) { // main 영역 시작
+		
+		Properties prop = new Properties();
+		
+		System.out.println(prop); // {}
+		
+		
+		
+	} // main 영역 끝
+
+} // 클래스 영역 끝

@@ -1,0 +1,108 @@
+package com.kh.model.vo;
+
+import java.io.Serializable;
+
+public class Keyboard implements Serializable{ // 클래스 영역 시작
+
+	private String brand; 
+	private String modelName;
+	private int keyCount;
+	private String switchType;
+	private String connection;
+	private int price;
+	private char rgb;
+	
+	public Keyboard() {}
+
+
+	public Keyboard(String brand, String modelName, int keyCount, String switchType, String connection, int price,
+			char rgb) {
+		super();
+		this.brand = brand;
+		this.modelName = modelName;
+		this.keyCount = keyCount;
+		this.switchType = switchType;
+		this.connection = connection;
+		this.price = price;
+		this.rgb = rgb;
+	}
+
+
+	public String getBrand() {
+		return brand;
+	}
+
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+
+	public String getModelName() {
+		return modelName;
+	}
+
+
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
+
+
+	public int getKeyCount() {
+		return keyCount;
+	}
+
+
+	public void setKeyCount(int keyCount) {
+		this.keyCount = keyCount;
+	}
+
+
+	public String getSwitchType() {
+		return switchType;
+	}
+
+
+	public void setSwitchType(String switchType) {
+		this.switchType = switchType;
+	}
+
+
+	public String getConnection() {
+		return connection;
+	}
+
+
+	public void setConnection(String connection) {
+		this.connection = connection;
+	}
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
+	public char getRgb() {
+		return rgb;
+	}
+
+
+	public void setRgb(char rgb) {
+		this.rgb = rgb;
+	}
+
+
+	@Override
+	public String toString() {
+		return "KeyBoard [brand=" + brand + ", modelName=" + modelName + ", keyCount=" + keyCount + ", switchType="
+				+ switchType + ", connection=" + connection + ", price=" + price + ", rgb=" + rgb + "]";
+	}
+
+
+} // 클래스 영역 끝

@@ -1,0 +1,62 @@
+package com.kh.chap03_map.part02_properties.run;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class PropertiesRun1 { // 클래스 영역 시작
+
+	public static void main(String[] args) { // main 영역 시작
+		
+		/*
+		 * * Properties
+		 * > Map 계열 : key + value 세트로 저장됨
+		 * 			   저장 순서 유지 X
+		 * 			   key 중복 X, value 중복 O
+		 * > 단, Properties 만의 특집이라고 한다면
+		 * 	 보통은 관례상 Key, Value 모두 String 타입으로 고정해서 쓰는 편임!!
+		 * 	 (그렇다고 해서 다른 타입을 못담는것은 아님)
+		 * > 표현법 상 제네릭 설정이 불가능함!!
+		 */
+		
+		// Properties 객체 먼저 생성 - 표현법 상 제네릭 설정 X
+		Properties prop = new Properties();
+		
+		/*
+		// 그래서 아무거나 담을 수 있음!!
+		prop.put("초코파이", new Snack("초코맛" , 600));
+		
+		System.out.println(prop);
+		
+		System.out.println(prop.get("초코파이"));
+		*/
+		// > 마찬가지로 put 메소드를 이용해서 데이터를 담을 수 있고, 마찬가지로 get 메소드를 이용해서 value 값을 꺼내올 수 있음
+		//	 (사용법은 HashMap 과 거의 똑같다)
+
+		// * Properties 는 보통 String, String 으로 고정해서 쓰는 경향이 있음!!
+		// > 에초에 String, String 으로 데이터를 추가해주는 별도의 메소드가 존재
+		// > 또한 String 타입의 key 를 제시하면 String 타입의 value 를 리턴해주는 별도의 메소드도 존재
+		//	 (각각 put, get 의 역할을 대체하는 String 전용 메소드가 존재)
+		
+		System.out.println(prop); // {}
+		
+		// 1. setProperty(String key, String value)
+		// > key + value 세트를 모두 String 타입으로 추가해주는 메소드
+		prop.setProperty("List", "ArrayList");
+		prop.setProperty("Set", "HashSet");
+		prop.setProperty("Map", "HashMap");
+		prop.setProperty("Map", "Properties");
+		// > 마찬가지로 키값이 중복되면 마지막으로 추가된 밸류값으로 덮어씌여짐!!
+		
+		try {
+			// 2. Properties 객체에 담긴 데이터들을 파일로 "내보내기" (출력)
+			// > store(OutputStream os, String comments)
+			prop.store(new FileOutputStream("test.properties"), "Properties test");
+			
+		} catch(IOException e) {
+			
+			e.printStackTrace();
+		}
+	} // main 영역 끝
+
+} // 클래스 영역 끝

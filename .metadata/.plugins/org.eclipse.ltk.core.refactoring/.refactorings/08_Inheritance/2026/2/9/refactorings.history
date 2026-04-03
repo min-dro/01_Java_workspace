@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.kh.chap02_inherit.model.vo.Boat.java&apos; to &apos;Ship.java&apos;&#x0D;&#x0A;- Original project: &apos;08_Inheritance&apos;&#x0D;&#x0A;- Original element: &apos;com.kh.chap02_inherit.model.vo.Boat.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.kh.chap02_inherit.model.vo.Ship.java&apos;" description="Rename compilation unit &apos;Boat.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;com.kh.chap02_inherit.model.vo{Boat.java" name="Ship.java" references="false" stamp="1771990835362" version="1.0"/>
+</session>

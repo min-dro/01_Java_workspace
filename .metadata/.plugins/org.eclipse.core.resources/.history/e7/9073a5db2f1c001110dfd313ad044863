@@ -1,0 +1,47 @@
+package com.kh.chap02_set.part01_hashSet.run;
+
+import java.util.HashSet;
+
+// HashSet 사용방법
+public class SetRun { // 클래스 영역 시작
+
+	public static void main(String[] args) { // main 영역 시작
+		
+		// 제네릭 설정 전
+		// HashSet 객체 먼저 생성
+		HashSet hs1 = new HashSet();
+		
+		// 1. add(추가할값)
+		hs1.add("반갑습니다");
+		hs1.add(new String("반갑습니다"));
+		hs1.add(new String("여러분"));
+		hs1.add(new String("안녕하세요"));
+		hs1.add(new String("여러분"));
+		hs1.add(50);
+		
+		System.out.println(hs1);
+		// > [50, 반갑습니다, 안녕하세요, 여러분]
+		// > 저장되는 데이터의 순서 유지 X,
+		//   중복 저장 X
+		//	 제네릭 설정을 안했을 경우 아무 타입이나 다 저장 가능!!
+		
+		// 2. size()
+		System.out.println("hs1 의 크기 : " + hs1.size()); // 3
+		
+		// 3. remove(삭제할값)
+		hs1.remove("여러분");
+		
+		System.out.println(hs1);
+		
+		// 4. clear()
+		hs1.clear();
+		
+		System.out.println(hs1);
+		
+		System.out.println("hs1 의 크기 : " + hs1.size()); // 0
+		
+		// 5. isEmpty()
+		System.out.println("hs1 이 비어있습니까 : " + hs1.isEmpty()); // true
+	} // main 영역 끝
+
+} // 클래스 영역 끝

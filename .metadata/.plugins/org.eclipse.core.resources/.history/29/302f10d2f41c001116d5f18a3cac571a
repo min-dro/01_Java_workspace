@@ -1,0 +1,16 @@
+package com.kh.view;
+
+import java.util.Scanner;
+
+import com.kh.controller.ParkingTowerController;
+
+public class ParkingTowerView {
+
+	private Scanner sc = new Scanner(System.in);
+	private ParkingTowerController ptc = new ParkingTowerController();
+	
+	public void mainMenu() {
+		
+	}
+	
+}

@@ -1,0 +1,23 @@
+package com.kh.view;
+
+import java.util.Scanner;
+
+import com.kh.controller.ParkingTowerController;
+
+public class ParkingTowerView {
+
+	private Scanner sc = new Scanner(System.in);
+	private ParkingTowerController ptc = new ParkingTowerController();
+	
+	public void mainMenu() {
+		while(true) {
+			System.out.println("1. 차량 주차");
+			System.out.println("2. 차량 출차");
+			System.out.println("3. 주차된 차량 검색");
+			System.out.println("4. 전체 출력");
+			System.out.println("0. 프로그램 종료하기");
+			System.out.print("입력 : ");
+		}
+	}
+	
+}

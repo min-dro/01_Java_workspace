@@ -1,0 +1,14 @@
+package com.kh.model.vo;
+
+public class Member { // 클래스 영역 시작
+
+	private int userNo;
+	private String userId;
+	private String userPwd;
+	private String userName;
+	private int age;
+	private char gender;
+	private String email;
+	private String phone;
+	
+} // 클래스 영역 끝

@@ -1,0 +1,43 @@
+package com.kh.chap01_list.part02_mvc.run;
+
+import com.kh.chap01_list.part02_mvc.view.MusicView;
+
+public class MusicRun {
+
+	/*
+	 * * ArrayList 를 이용해서 음악 관리 프로그램 만들기
+	 * 
+	 * [ 기능 ]
+	 * 1. 새로운 곡 추가
+	 * 2. 곡 전체 조회
+	 * 3. 특정 곡 검색
+	 * 4. 특정 곡 삭제
+	 * 5. 특정 곡 수정
+	 * 
+	 * - 참고로 추가기능을 Creare, 조회 / 검색 기능을 Read, / 수정 기능을 Update, 삭제 기능을 Delete 라고 부른다!!
+	 * 	 (총 랍쳐서 CRUD 라고 부름)
+	 * 
+	 * - ArrayList 를 음악 저장소로 삼아, ArrayList 에 음악 정보 추가, 음악 정보들 조회, 음악 정보 수정, 음악 정보 삭제 해볼것!!
+	 * 
+	 * * 이왕이면 코드를 작성할 때 역할 별로 코드를 분리해서 짜 볼 것임!!
+	 * - MusicRun 클래스 : 프로그램 시작 용도로만 사용 (main 메소드 포함)
+	 * - Music 클래스 : 정보를 담는 용도로만 사용
+	 * - MusicView 클래스 : 콘솔창에 보여질 화면 용도로만 사용 (출력문, 입력문 위주로)
+	 * - MusicController 클래스 : 기능 위주의 코드로만 쓸 용도로 사용
+	 * 
+	 * * MVC (Model - View - Controller) 패턴
+	 * M : Model 의 약자 (Model 은 데이터 관련을 의미) - 정보를 담는 VO, 데이터가 담겨있는 곳과 직접 입출력이 일어나는 DAO
+	 * V : View 의 약자 (View 는 화면 관련을 의미) - 눈에 보이는 시작적인 효과를 줄 수 있음!!
+	 * C : Controller 의 약자 (Controller 는 기능 관련을 의미) - 비즈니스 로직 (기능 관련 코드) 만 담아둘 것!!
+	 */
+	
+	public static void main(String[] args) {
+		
+		// 프로그램 시작과 동시에 main 메소드가 JVM 에 의해 호출됨!!
+		// > 프로그햄 시작과 동시에 메인메뉴가 보여져야함!! (MusicView 클래스의 mainMenu 메소드 호출)
+		MusicView mv = new MusicView();
+		mv.mainMenu();
+
+	}
+
+}

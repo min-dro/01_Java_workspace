@@ -1,0 +1,13 @@
+package com.kh.chap01_list.part02_mvc.controller;
+
+// Controller : 사용자의 "요청" 을 받아서 해당 기능을 처리해주는 부분
+public class MusicController { // 클래스 영역 시작
+
+	// 1. 새로운 곡을 추가하는 기능을 담당하는 메소드
+	public void insertMusic(String title, String artist) {
+		// TODO Auto-generated method stub
+		
+	} 
+	
+	
+} // 클래스 영역 끝

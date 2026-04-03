@@ -1,0 +1,81 @@
+package com.kh.controller;
+
+import java.util.ArrayList;
+
+import com.kh.model.dao.KeyboardDao;
+import com.kh.model.vo.Keyboard;
+
+public class KeyboardController { // 클래스 영역 시작
+	
+	private ArrayList<Keyboard> keyboardList = new ArrayList<>();
+	private KeyboardDao kd = new KeyboardDao();
+	
+	public int insertKeyboard(String board, String modelName, int keyCount, String switchType, String connection, int price,
+			char rgb, String detail) { // 메소드 영역 시작
+		int before = keyboardList.size();
+		keyboardList.add(new Keyboard(board, modelName, keyCount, switchType, connection, price, rgb
+				, detail));
+		int after = keyboardList.size();
+		kd.saveFile(keyboardList);
+		return after - before;
+	} // 메소드 영역 끝
+
+	public ArrayList<Keyboard> selectKeyboardList() { // 메소드 영역 시작
+		
+		keyboardList = kd.loadFile();
+		return keyboardList;
+	} // 메소드 영역 끝
+
+	public ArrayList<Keyboard> searchKeyboardByModelName(String keyword) { // 메소드 영역 시작
+		keyboardList = kd.loadFile();
+		ArrayList<Keyboard> list = new ArrayList<>();
+		for(int i = 0; i < keyboardList.size(); i++) {
+			if(keyboardList.get(i).getModelName().contains(keyword)) {
+				list.add(keyboardList.get(i));
+			}
+		}
+		return list;
+	} // 메소드 영역 끝
+
+	public int updateKeyboard(String modelName, String upBrand, String upModelName, int upKeyCount
+			, String upSwitchType, String upConnection, int upPrice, char upRgb, String upDetail) { // 메소드 영역 시작
+		keyboardList = kd.loadFile();
+		for(int i = 0; i < keyboardList.size(); i++) {
+			if(modelName.equals(keyboardList.get(i).getModelName())) {
+				if(upBrand != null) {
+					keyboardList.get(i).setBrand(upBrand);
+				} else if(upModelName != null) {
+					keyboardList.get(i).setModelName(upModelName);
+				} else if(upKeyCount != 0) {
+					keyboardList.get(i).setKeyCount(upKeyCount);
+				} else if(upSwitchType != null) {
+					keyboardList.get(i).setSwitchType(upSwitchType);
+				} else if(upConnection != null) {
+					keyboardList.get(i).setConnection(upConnection);
+				} else if(upPrice != 0) {
+					keyboardList.get(i).setPrice(upPrice);
+				} else if(upRgb != 0) {
+					keyboardList.get(i).setRgb(upRgb);
+				} else if(upDetail != null) {
+					keyboardList.get(i).setDetail(upDetail);
+				}
+				kd.saveFile(keyboardList);
+				return 1; 
+			}
+		}
+		return 0;
+	} // 메소드 영역 끝
+
+	public int deleteKeyboard(String modelName) { // 메소드 영역 시작
+		kd.loadFile();
+		for(int i = 0; i < keyboardList.size(); i++) {
+			if(modelName.equals(keyboardList.get(i).getModelName())) {
+				keyboardList.remove(i);
+				kd.saveFile(keyboardList);
+				return 1;
+			}
+		}
+		return 0;
+	} // 메소드 영역 끝
+	
+} // 클래스 영역 끝

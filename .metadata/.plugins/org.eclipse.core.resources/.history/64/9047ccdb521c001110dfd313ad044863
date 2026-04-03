@@ -1,0 +1,34 @@
+package com.kh.chap03_map.part02_properties.run;
+
+import java.util.Properties;
+
+import com.kh.chap03_map.part01_hashMap.model.vo.Snack;
+
+public class PropertiesRun1 { // 클래스 영역 시작
+
+	public static void main(String[] args) { // main 영역 시작
+		
+		/*
+		 * * Properties
+		 * > Map 계열 : key + value 세트로 저장됨
+		 * 			   저장 순서 유지 X
+		 * 			   key 중복 X, value 중복 O
+		 * > 단, Properties 만의 특집이라고 한다면
+		 * 	 보통은 관례상 Key, Value 모두 String 타입으로 고정해서 쓰는 편임!!
+		 * 	 (그렇다고 해서 다른 타입을 못담는것은 아님)
+		 * > 표현법 상 제네릭 설정이 불가능함!!
+		 */
+		
+		// Properties 객체 먼저 생성 - 표현법 상 제네릭 설정 X
+		Properties prop = new Properties();
+		
+		// 그래서 아무거나 담을 수 있음!!
+		prop.put("초코파이", new Snack("초코맛" , 600));
+		
+		System.out.println(prop);
+		
+		System.out.println();
+
+	} // main 영역 끝
+
+} // 클래스 영역 끝

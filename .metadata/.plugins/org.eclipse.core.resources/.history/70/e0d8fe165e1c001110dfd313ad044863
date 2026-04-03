@@ -1,0 +1,35 @@
+package com.kh.controller;
+
+import java.util.ArrayList;
+
+import com.kh.model.vo.Member;
+
+public class MemberController { // 클래스 영역 시작
+
+	private ArrayList<Member> memberList = new ArrayList<>();
+	
+	public int idCheck(String userId) {
+		
+		for(int i = 0; i < memberList.size(); i++) {
+			if(userId.equals(memberList.get(i).getUserId())) {
+				return 1;
+			}
+		}
+		
+		return 0;
+	} // 클래스 영역 시작
+
+	public int insertMember(String userId, String userPwd, String userName, int age, char gender, String email,
+			String phone) {
+		int before = memberList.size();
+		memberList.add(new Member(memberList.get(memberList.size()).getUserNo() + 1, userId, userPwd, userName, age, gender, email, phone));
+		int after = memberList.size();
+		return after - before;
+	}
+
+	public ArrayList<Member> selectMemberList() {
+		
+		return memberList;
+	}
+
+} // 클래스 영역 끝

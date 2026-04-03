@@ -1,0 +1,170 @@
+package com.kh.chap03_map.part01_hashMap.run;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import com.kh.chap03_map.part01_hashMap.model.vo.Snack;
+
+// HashMap 사용법
+public class MapRun { // 클래스 영역 시작
+
+	public static void main(String[] args) { // 메소드 영역 시작
+		// 제네릭 설정 전
+		// HashMap 객체 먼저 생성
+		HashMap /* <Object, Object> */ hm1 = new HashMap /* <> */();
+		
+		// 명심할 사항 : 클래스간의 계층구조를 보면 List 나 Set 계열은 Collection 을 구현한 클래스
+		//	 		  Map 계열은 Collection 계열이 아님!!
+		
+		// 차이점 : List 나 Set 계열은 value 만 저장 가능, Map 계열은 key + value 로 저장해야함
+		//		  List 나 Set 계열은 데이터를 추가할 때 add 메소드 이용, Map 계열은 put 메소드 이용
+		
+		// K == Object
+		// V == Object
+		// > 제네릭 설정을 아직 안했음!!
+		
+		// 1. put(K key, V value)
+		// > Map 공간에 key + value 세트로 데이터를 추가하는 메소드
+		hm1.put("123", "첫번째 밸류");
+		hm1.put(9, 1.234);
+		hm1.put('a', "첫번째 밸류");
+		hm1.put("123", "두번째 밸류");
+		
+		System.out.println(hm1 /* .toString() */);
+		// > {a=첫번째 밸류, 123=두번째 밸류, 9=1.234)
+		// > Collection 자식 계열들은 [] 안에 출력, Map 계열은 {} 안에 출력
+		// > 저장 순서 유지 X
+		// > value 값은 중복 허용이 됨!! key 값은 중복 허용이 안된!!
+		//	 (만약 key 가 중복됬을 경우에는 마지막으로 put 된 데이터로 덮어씌워짐!!)
+		// > 마찬가지로 아직 제네릭 설정 전이기 때문에 key 든 value 든 간에 아무 자료형의 값이나 다 넣을 수 있음!!
+		
+		System.out.println("-------------");
+		
+		// 제네릭 설정 후
+		
+		// * Map 계열의 제네릭을 설정한 경우
+		// > Key 에 대한 자료형과 Value 에 대한 자료형 둘다 각각 지정하고 넘어가야함!!
+		HashMap<String, Snack> hm2 = new HashMap<>();
+		
+		// K == String
+		// V == Snack
+		
+		// 1. put(K key, V value)
+		// > Map 공간에 데이터를 key + value 형식으로 추가해주는 메소드
+		hm2.put("빅파이", new Snack("초코딸기맛", 200));
+		hm2.put("칙촉", new Snack("초코칩맛", 150));
+		hm2.put("새우깡", new Snack("짠맛", 500));
+		hm2.put("크리스피롤", new Snack("고소한맛", 100));
+		// hm2.put(123, "아무거나");
+		
+		System.out.println(hm2);
+		// > 저장 순서 유지
+		// > 제네릭 설정 후 Key + value 모두 설정된 타입으로만 put 할 수 있음!!
+		
+		hm2.put("새우깡", new Snack("매운맛", 600));
+		
+		System.out.println(hm2);
+		// > 중복된 key 값의 value 값으로 덮어씌워짐!!
+		
+		// 2. get(Object key) : V
+		// > Map 공간에서 해당 키값에 대한 value 값을 반환해주는 메소드
+		System.out.println(hm2.get("빅파이"));
+
+		Snack s = hm2.get("크리스피롤");
+		System.out.println(s);
+		// > 제네릭 설정을 하면 Map 또한 마찬가지로 매번 일일이 자식타입으로 강제형변환을 안해줘도 됨!!
+		
+		System.out.println(hm2.get("초코파이"));
+		// > get 메소드 호출 시 없는 키값을 제시하면 null 이 리턴된다!!
+		
+		// 3. size()
+		// > Map 공간에 담겨있는 key + value 의 갯수 반환
+		System.out.println("size : " + hm2.size()); // 4
+		
+		// 4. replace(K key, V value)
+		// > Map 공간의 해당 Key 값을 찾아서 새로 전달된 value 로 변경시켜주는 메소드
+		hm2.replace("새우깡", new Snack("겁나짠맛", 1000));
+		// > put 은 원래 목적이 데이터를 추가해주는 역할임!!
+		//	 (우연히 키값이 중복되었을 때 덮어씌워주면서 데이터가 변경되는 효과까지 줌
+		
+		System.out.println(hm2);
+		
+		// 5. remove(Object key)
+		// > Map 공간으로부터 전달된 key 값을 찾아서 key + value 세트로 지워주는 메소드
+		hm2.remove("새우깡");
+		
+		System.out.println(hm2);
+		
+		System.out.println("--------------");
+		
+		// > Map 에 들어있는 데이터들에 순차적으로 접근하고자 할 때?
+		//	 즉, Map 에 반복문을 돌려보고 싶다!!
+		
+		// * Map 또한 저장 순서가 유지가 되지 않아서 (즉, index 개념이 없기 때문에)
+		//	 일반적인 반복문 사용이 불가!!
+		
+		// foreach문 (향상된 for문)
+		// for(??? : hm2) {
+		// > Map 에는 key + value 세트로 들어가고 나오기 때문에 향상된 for문 또한 사용 불가!!
+		
+		// List 로 Map 의 데이터를 옮겨담아서 반복문 돌리기?
+		// > List 와 Map 은 애초에 계열이 다르기 때문에 불가
+		
+		// ArrayList list = new ArrayList(hm2);
+		// ArrayList list = new ArrayList();
+		// list.addAll(hm2);
+		
+		// Iterator (반복자) 를 이용하는 방법?
+		// > .iterator() 메소드는 List 나 Set 계열에서만 사용 가능!!
+		//	 (즉, Collection 계열에서만 사용 가눙)
+		
+		// * 방법이 아예 없는 건 아님!!
+		// > Map 을 Set 으로 변경 가능함!! 아까 배웠던 Set 에 반복돌리는 3가지 방법을 적용
+		
+		// * Map 을 Set 으로 바꾸는 메소드 2가지
+		// 1. keySet() 메소드를 이용하는 방법
+		// > Map 공간에 담겨있는 데이터들 중 key 값들만 뽑아서 Set 으로 옮겨줌
+		
+		// 1) hm2.keySet() 메소드 호출하기
+		Set<String> keySet = hm2.keySet();
+		
+		// 2) 향상된 for문을 쓰거나, ArrayList 로 옮겨담아서 일반 for문을 쓰거나, Iterator 를 이용해서 반복 돌리기
+		// - Iterator 이용
+		Iterator<String> itKey = keySet.iterator();
+		
+		while(itKey.hasNext()) {
+			
+			String key = itKey.next();
+			Snack value = hm2.get(key);
+			
+			System.out.println("key : " + key + ", value : " + value);
+		}
+		
+		System.out.println("--------------");
+		
+		// 2. entrySet() 메소드를 이용하는 방법
+		// > Entry : 집합 형태를 나타내는 일종의 자료형 (Key + Value 서로 묶여있는 형태)
+		
+		// 1) hm2.entrySet() 메소드 호출 - (Key + Value 형태로 Set 으로 옮겨짐)
+		Set<Entry<String, Snack>> entrySet = hm2.entrySet();
+		
+		// 2) Iterator 이용해서 반복 돌려보기
+		Iterator<Entry<String, Snack>> itEntry = entrySet.iterator();
+		
+		while(itEntry.hasNext()) {
+			
+			Entry<String, Snack> entry = itEntry.next();
+			
+			// entry 로 부터 키와 벨류를 각각 추출
+			String key = entry.getKey();
+			Snack value = entry.getValue();
+			
+			System.out.println("key : " + key + ", value : " + value);
+			
+		}
+		
+	} // 메소드 영역 끝
+
+} // 클래스 영역 끝

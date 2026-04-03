@@ -1,0 +1,112 @@
+package com.kh.model.vo;
+
+import java.io.Serializable;
+
+public class Keyboard implements Serializable{ // 클래스 영역 시작
+
+	private String brand; 		// 제조사
+	private String modelName;	// 모델명
+	private int keyCount;		// 키 개수
+	private String switchType;	// 스위치 방식 (멤브레인, 적축, 은축, 갈축, 자석축 등)
+	private String connection;	// 연결 방식 (유선, 무선, 유무선 등)
+	private int price;			// 가격
+	private char rgb;			// RGB 지원 여부 (y/n)
+	private String detail;		// 상세 내용 (생략 가능)
+	
+	public Keyboard() {}
+
+	public Keyboard(String brand, String modelName, int keyCount, String switchType, String connection, int price,
+			char rgb, String detail) {
+		super();
+		this.brand = brand;
+		this.modelName = modelName;
+		this.keyCount = keyCount;
+		this.switchType = switchType;
+		this.connection = connection;
+		this.price = price;
+		this.rgb = rgb;
+		this.detail = detail;
+	}
+
+	public String getBrand() { // 메소드 영역 시작
+		return brand;
+	} // 메소드 영역 끝
+
+
+	public void setBrand(String brand) { // 메소드 영역 시작
+		this.brand = brand;
+	} // 메소드 영역 끝
+
+
+	public String getModelName() { // 메소드 영역 시작
+		return modelName;
+	} // 메소드 영역 끝
+
+	public void setModelName(String modelName) { // 메소드 영역 시작
+		this.modelName = modelName;
+	} // 메소드 영역 끝
+
+	public int getKeyCount() { // 메소드 영역 시작
+		return keyCount;
+	} // 메소드 영역 끝
+
+	public void setKeyCount(int keyCount) { // 메소드 영역 시작
+		this.keyCount = keyCount;
+	} // 메소드 영역 끝
+
+	public String getSwitchType() { // 메소드 영역 시작
+		return switchType;
+	} // 메소드 영역 끝
+
+	public void setSwitchType(String switchType) { // 메소드 영역 시작
+		this.switchType = switchType;
+	} // 메소드 영역 끝
+
+	public String getConnection() { // 메소드 영역 시작
+		return connection;
+	} // 메소드 영역 끝
+
+	public void setConnection(String connection) { // 메소드 영역 시작
+		this.connection = connection;
+	} // 메소드 영역 끝
+
+	public int getPrice() { // 메소드 영역 시작
+		return price;
+	} // 메소드 영역 끝
+
+	public void setPrice(int price) { // 메소드 영역 시작
+		this.price = price;
+	} // 메소드 영역 끝
+
+	public char getRgb() { // 메소드 영역 시작
+		return rgb;
+	} // 메소드 영역 끝
+
+	public void setRgb(char rgb) { // 메소드 영역 시작
+		this.rgb = rgb;
+	} // 메소드 영역 끝
+
+	public String getDetail() { // 메소드 영역 시작
+		return detail;
+	} // 메소드 영역 끝
+	
+	public void setDetail(String detail) { // 메소드 영역 시작
+		this.detail = detail;
+	} // 메소드 영역 끝
+	
+	@Override
+	public String toString() { // 메소드 영역 시작
+		if(rgb == 'y') {
+			rgb = 'O';
+		} else {
+			rgb = 'X';
+		}
+		String detail = "";
+		if(this.detail.length() > 0) {
+			detail = ", 상세 내용 :  " + this.detail;
+		}
+		return "[제조사 : " + brand + ", 모델명 : " + modelName + ", 키 갯수 : " + keyCount + ", 스위치 방식 : "
+				+ switchType + ", 연결 방식 : " + connection + ", 가격 : " + price + ", RGB : " + rgb + detail + "]";
+	} // 메소드 영역 끝
+
+} // 클래스 영역 끝

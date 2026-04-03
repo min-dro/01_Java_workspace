@@ -1,0 +1,38 @@
+package com.kh.chap01_list.part01_arrayList.model.vo;
+
+public class Music { // 클래스 영역 시작
+
+	// 필드부
+	private String title; // 노래 제목
+	private String artist; // 가수명
+	
+	// 생성자부
+	public Music() { }
+
+	public Music(String title, String artist) {
+		this.title = title;
+		this.artist = artist;
+	}
+
+	public String getTitle() { // 메소드 영역 시작
+		return title;
+	} // 메소드 영역 끝
+
+	public void setTitle(String title) { // 메소드 영역 시작
+		this.title = title;
+	} // 메소드 영역 끝
+
+	public String getArtist() { // 메소드 영역 시작
+		return artist;
+	} // 메소드 영역 끝
+
+	public void setArtist(String artist) { // 메소드 영역 시작
+		this.artist = artist;
+	} // 메소드 영역 끝
+
+	@Override
+	public String toString() { // 메소드 영역 시작
+		return "Music [title=" + title + ", artist=" + artist + "]";
+	} // 메소드 영역 끝
+	
+} // 클래스 영역 끝

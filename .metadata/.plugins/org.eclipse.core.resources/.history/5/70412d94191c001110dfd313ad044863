@@ -1,0 +1,5 @@
+package com.kh.chap01_list.part02_mvc.model.vo;
+
+public class Music { // 클래스 영역 시작
+
+} // 클래스 영역 끝

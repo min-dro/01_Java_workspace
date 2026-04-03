@@ -1,0 +1,13 @@
+package com.kh.chap02_set.part01_hashSet.run;
+
+// HashSet 사용방법
+public class SetRun { // 클래스 영역 시작
+
+	public static void main(String[] args) { // main 영역 시작
+		
+		// 제네릭 설정 전
+		// HashSet 객체 먼저 생성
+		HashSet hs1 = new HashSet();
+	} // main 영역 끝
+
+} // 클래스 영역 끝

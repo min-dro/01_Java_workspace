@@ -1,0 +1,20 @@
+package com.kh.chap03_map.part02_properties.run;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+
+public class PropertiesRun2 { // 클래스 영역 시작
+
+	public static void main(String[] args) { // main 영역 시작
+		
+		Properties prop = new Properties();
+		
+		System.out.println(prop); // {}
+		
+		// 3. 파일로부터 데이터를 키 + 밸류 형식으로 읽어들이는 메소드 (입력)
+		// > load(InputStream is) : .properties 파일로부터 읽어들임
+		prop.load(new FileInputStream("test.properties"));
+		
+	} // main 영역 끝
+
+} // 클래스 영역 끝

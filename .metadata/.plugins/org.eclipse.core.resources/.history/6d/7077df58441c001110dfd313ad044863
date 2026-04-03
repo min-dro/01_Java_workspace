@@ -1,0 +1,172 @@
+package com.kh.chap02_set.part01_hashSet.run;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+
+import com.kh.chap02_set.part01_hashSet.model.vo.Student;
+
+// HashSet 사용방법
+public class SetRun { // 클래스 영역 시작
+
+	public static void main(String[] args) { // main 영역 시작
+		
+		// 제네릭 설정 전
+		// HashSet 객체 먼저 생성
+		HashSet/* <Object> */ hs1 = new HashSet/* <Object */();
+		
+		// 1. add(추가할값)
+		hs1.add("반갑습니다");
+		hs1.add(new String("반갑습니다"));
+		hs1.add(new String("여러분"));
+		hs1.add(new String("안녕하세요"));
+		hs1.add(new String("여러분"));
+		hs1.add(50);
+		
+		System.out.println(hs1);
+		// > [50, 반갑습니다, 안녕하세요, 여러분]
+		// > 저장되는 데이터의 순서 유지 X,
+		//   중복 저장 X
+		//	 제네릭 설정을 안했을 경우 아무 타입이나 다 저장 가능!!
+		
+		// 2. size()
+		System.out.println("hs1 의 크기 : " + hs1.size()); // 3
+		
+		// 3. remove(삭제할값)
+		hs1.remove("여러분");
+		
+		System.out.println(hs1);
+		
+		// 4. clear()
+		hs1.clear();
+		
+		System.out.println(hs1);
+		
+		System.out.println("hs1 의 크기 : " + hs1.size()); // 0
+		
+		// 5. isEmpty()
+		System.out.println("hs1 이 비어있습니까 : " + hs1.isEmpty()); // true
+		
+		// > Set 계열 또한 유용한 메소드들이 많고,
+		//	 대부분 List 계열과 메소드 사용법이나 동작이 거의 비슷하다!!
+		//   왜? Set, List 계열 모두 Collection 인터페이스 계열 자식들이기 때문!!
+		
+		System.out.println("-----------------------");
+		
+		// 제네릭 설정 후
+		HashSet<Student> hs2 = new HashSet<>();
+		
+		// hs2.add("시작");
+		hs2.add(new Student("김갑생", 26, 45));
+		hs2.add(new Student("이민호", 38, 100));
+		hs2.add(new Student("홍길동", 24, 78));
+		
+		hs2.add(new Student("이민호", 38, 100));
+		
+		System.out.println(hs2 /* .toString() */);
+		// > 저장 순서 유지 X
+		//	 제네릭을 설정했기 때문에 같은 타입만 저장 가능!!
+		// > 중복 저장 O ...?
+		
+		// 왜 중복 저장이 되었는가?
+		// > 동일한 객체로 판단이 되지 않아서 중복 저장됨!!
+		
+		/*
+		 * * HashSet 의 동작 원리
+		 * > HashSet 은 값이 추가될 때 마다 equals(), hashCode() 메소드들 통해
+		 * 	 이미 동일한 데이터가 있는지 없는지 검사 후 add 해줌
+		 * 
+		 * > HashSet 에 객체를 담을 때
+		 * 	 내부적으로 equals() 로 비교 - 주소값 동등비교
+		 * 	 +
+		 * 	 내부적으로 각 hashCode() 값이 일치하는지도 비교 - 결론은 주소값 동등비교
+		 * 	 (즉, "주소값" 을 기준으로 중복판별을 한다!!
+		 * 
+		 * 참고) 위의 String 은 내용물 기준으로 중복판별이 된 이유?
+		 * > String 클래스의 equals() 메소드는 "내용물" 기준으로 동등비교 하게끔 오버라이딩
+		 * 	 			   hashCode() 메소드는  "내용물" 기준으로 십진수로 뽑아주게끔 오버라이딩
+		 * 
+		 * * 그러면 일반 객체 기준으로
+		 * 	 주소값이 아닌 객체의 각 필드값이 일치하면 동일한 객체로 판별이 되서 HashSet 에 중복 저장이 안되게끔 하고싶다면?
+		 * > equals(), hashCode() 메소드를 오버라이딩 해주면 된다!!
+		 * 
+		 * 기존 Object 클래스의 메소드
+		 * - equals : 주소값 동등비교
+		 * - hashCode() : 주소값을 십진수
+		 * 
+		 * Student 클래스 메소드 오버라이딩
+		 * - equals() : 내용물(필드) 동등비교
+		 * - hashCode() : 내용물 (필드) 을 십진수
+		 */
+		
+		System.out.println("---------------------");
+		
+		// > Set 에 담겨있는 데이터들에 "순차적" 으로 접근하고자 할 때?
+		//	 즉, Set 에 반복문을 돌려보고 싶다.
+		
+		// Set : 순서가 무작위로 데이터들이 저장되어있다!!
+		//		 즉, index 개념이 없다!!
+		// > 일반 for문을 사용할 수 없다.
+		
+		// 1. 향상된 for문 사용 가능 (foreach문)
+		// for(변수선언문 : 셋명)
+		// > 구문 표현법 어디에도 index 에 대한 언급이 하나도 없기 때문에 사용 가능
+		for(Student s : hs2) {
+			
+			System.out.println(s);
+		}
+		
+		System.out.println("-------------------------");
+		
+		// 2. 기존 Set 에 저장된 데이터를 ArrayList 로 옮겨담은 후
+		//	 해당 ArrayList 를 기준으로 일반 for문을 돌리는 방법
+		
+		// * Set 의 데이터를 List 로 옮기는 방법
+		// 1) 빈 ArrayList 객체 생성 후 addAll() 메소드를 활용
+		// ArrayList<Student> list = new ArrayList<>(); // []
+		// list.addAll(hs2);
+		// > 비어있는 리스트에 addAll 로 Set 에 담겨있던 내용물을 통째로 추가
+		
+		// 2) ArrayList 객체 생성 시 매개변수 생성자를 이용
+		ArrayList<Student> list = new ArrayList<>(hs2);
+		// > 처음부터 Set 에 있던 데이터가 추가된 형태로 ArrayList 가 만들어짐!!
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			System.out.println(list.get(i));
+		}
+		// > 결국 List 와 Set 은 같은 Collection 계열이기 때문에 호환이 가능함!!
+		
+		System.out.println("----------------------");
+		
+		// 3. HashSet 클래스에서 제공하는 Iterator (반복자) 를 이용하는 방법
+		
+		// 3_1. hs2 에 담겨있는 객체들을 Iterator (반복자) 에 옮겨 담기
+		Iterator<Student> it = hs2.iterator();
+		// > 어차피 hs2 에는 제네릭 설정으로 인해 Student 객체만 담겨있음!!
+		//	 옮겨담아도 어차피 Student 만 옮겨담아질것임!! (Iterator 에도 똑같이 제네릭 설정 해주기)
+		
+		// 3_2. Iterator (반복자) 를 통해 반복 돌리기
+		// > 뎌이상 뽑아낼 데이터가 없을 때 까지만 반복!! (반복 횟수가 불명확 - while문)
+		while(it.hasNext()) {
+			// > it.hasNext() : Iterator 객체에 뽑을 데이터가 남아있다면 true / 없으면 false 반환
+			
+			// 뽑아낼 데이터가 있다면
+			// > it.next() : 데이터를 Iterator 객체로부터 뽑아내주는 메소드
+			System.out.println(it.next());
+		}
+		
+		// * Iterator 의 동작 원리
+		// > String 의 StringTokenizer 와 비슷!!
+		
+		// System.out.println(it.next());
+		// > NoSuchElementException
+		//	 더이상 뽑아낼 데이터가 없는데도 데이터를 뽑고자 할 때 발생함
+		
+		// * .iterator() 메소드
+		// > List 또는 Set 에 담겨있던 데이터들을 Iterator 객체로 옮겨담아주는 메소드
+		//   (Collection 계열에서는 사용 가능한 메소드)
+		
+	} // main 영역 끝
+
+} // 클래스 영역 끝

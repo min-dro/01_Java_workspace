@@ -1,0 +1,119 @@
+package com.kh.chap02_set.part01_hashSet.model.vo;
+
+import java.util.Objects;
+
+public class Student /* extends Object */ { // 클래스 영역 시작
+
+	// 필드부
+	private String name; // 학생 이름
+	private int age; // 학생 나이
+	private int score; // 점수
+	
+	// 생성자부
+	public Student() {}
+
+	public Student(String name, int age, int score) {
+		super();
+		this.name = name;
+		this.age = age;
+		this.score = score;
+	}
+
+	// 메소드부
+	public String getName() { // 메소드 영역 시작
+		return name;
+	} // 메소드 영역 끝
+
+	public void setName(String name) { // 메소드 영역 시작
+		this.name = name;
+	} // 메소드 영역 끝
+
+	public int getAge() { // 메소드 영역 시작
+		return age;
+	} // 메소드 영역 끝
+
+	public void setAge(int age) { // 메소드 영역 시작
+		this.age = age;
+	} // 메소드 영역 끝
+
+	public int getScore() { // 메소드 영역 시작
+		return score;
+	} // 메소드 영역 끝
+
+	public void setScore(int score) { // 메소드 영역 시작
+		this.score = score;
+	} // 메소드 영역 끝
+
+	@Override
+	public String toString() { // 메소드 영역 시작 
+		return "Student [name=" + name + ", age=" + age + ", score=" + score + "]";
+	} // 메소드 영역 끝
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(age, name, score);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		return age == other.age && Objects.equals(name, other.name) && score == other.score;
+	}
+	
+	// equals, hashcode 오버라이딩
+	// equals 오버라이딩 - 필드 내용을 기준으로 동등비교
+	/*
+	@Override
+	public boolean equals(Object obj) { // 메소드 영역 시작
+	
+		// 매개변수로 주어진 Object obj 가 동등비교대상
+		// > Student객체명.equals(비교할Student객체)
+		
+		// Student this 	VS      (Student)Object obj
+		Student other = (Student) obj;
+		
+		// 이름을 나타내는 name 필드값이 일치하는지?
+		// this.name.equals(other.name)
+		// 나이를 나타내는 age 필드값이 일치하는지?
+		// this.age == other.age
+		// 점수를 나타내는 score 필드값이 일치하는지?
+		// this.score == other.score
+		// > 이 세개의 결과가 모두 true 여야지만 최종 결과도 true
+		 
+		if((this.name.equals(other.name)) &&
+				(this.age == other.age) &&
+		   		(this.score == other.score)) {
+		   		
+			return true;
+			
+		} else {
+		
+			return false; 
+		}
+	}
+	
+	// hashCode 오버라이딩 - 필드 내용을 기준으로 십진수로 만들어서 리턴
+	@Override
+	public int hashCode() { // 메소드 영역 시작
+		
+		// 이미 String 클래스의 hashCode 메소드가 내용을 기준으로 십진수화 해줌!!
+		// "이민호38100".hashCode()
+		return (name + age + score).hashCode();
+	} // 메소드 영역 끝
+	*/
+	
+	/*
+	 * * VO 클래스 작성 시
+	 * 	 해당 VO 타입의 객체를 가지고 HashSet 에 저장할 일이 생긴다면
+	 * 	 위와 같이 필드값을 기준으로 동등비교 하는 equals, 필드값을 기준으로 동작하는 hashCode 메소드를
+	 * 	 오버라이딩 해서 쓰는 것을 권장함!! (자동완성 옵션 가능)
+	 * > 만약 HashSet 에 저장할 일이 없다면 굳이 오버라이딩 안해도 됨!! (선택)
+	 */
+	
+} // 클래스 영역 끝

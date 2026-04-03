@@ -1,0 +1,10 @@
+package com.kh.chap02_set.part01_hashSet.run;
+
+public class SetRun {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
